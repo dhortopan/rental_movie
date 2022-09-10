@@ -6,6 +6,7 @@ import application.rental_movie.mappers.MovieMapper;
 import application.rental_movie.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -94,6 +95,12 @@ public class MovieServiceImpl implements MovieService{
         }
         return false;
     }
+
+//    @Override
+//    public void deleteById(Long id) {
+//        movieRepository.deleteById(id);
+//    }
+
 
     /**
      * Updates existing movie entity.

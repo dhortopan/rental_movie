@@ -10,15 +10,16 @@ import application.rental_movie.repositories.RentalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Service("rentalService")
-public class RentalServiceImpl {
+public class RentalServiceImpl implements RentalService {
     private final MovieService movieService;
 
     private final RentalRepository rentalRepository;
@@ -73,7 +74,7 @@ public class RentalServiceImpl {
             throw new RuntimeException("You can't borrow a movie because you have a penalty");
         if (movie != null) {
             if (movie.isBorrowed())
-                throw new RuntimeException("You can't rent a borrowed book");
+                throw new RuntimeException("You can't rent a borrowed movie");
 
             movie.setBorrowed(true);
             movieService.update(movieMapper.MovieToDTO(movie));
@@ -125,7 +126,7 @@ public class RentalServiceImpl {
             }
             return rentalMapper.rentalToDTO(rentalRepository.save(rental));
         } else {
-            throw new RuntimeException("Incorrent rental!");
+            throw new RuntimeException("Incorrect rental!");
         }
     }
 

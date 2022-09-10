@@ -2,16 +2,25 @@ package application.rental_movie.entities_models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+@Entity
+@Table(name = "users")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 
 public class User implements UserDetails {
 
@@ -38,17 +47,17 @@ public class User implements UserDetails {
     private boolean credentials;
 
 
-    @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonIgnore
-    @ToString.Exclude
-    private List<Rental> rentals;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<UserRole> userRoles;
 
+
+    @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<Rental> rentals;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

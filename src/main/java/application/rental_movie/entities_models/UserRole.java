@@ -1,9 +1,6 @@
 package application.rental_movie.entities_models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.usertype.UserType;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,11 +10,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Getter
+@Setter
 public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-//    private UserType userType;
+//    private String userType;
 
 
     @Enumerated(EnumType.STRING)

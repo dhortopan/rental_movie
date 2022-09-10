@@ -2,6 +2,7 @@ package application.rental_movie.services;
 
 import application.rental_movie.dto.UserDTO;
 import application.rental_movie.entities_models.User;
+import application.rental_movie.entities_models.UserRole;
 import application.rental_movie.mappers.UserMapper;
 import application.rental_movie.repositories.UserRepository;
 import application.rental_movie.repositories.UserRoleRepository;

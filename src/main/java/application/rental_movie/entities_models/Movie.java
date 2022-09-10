@@ -7,27 +7,27 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-//import com.sun.istack.NotNull;
+
+
 
 
 @Entity
-//@Table(name = "books")
 @Table(name = "movies")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
+@Getter
+@Setter
 public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Column(name = "author", length = 50)
+
     @Column(name = "director", length = 50)
     @NotBlank
     private String director;
@@ -36,11 +36,12 @@ public class Movie {
     @NotBlank
     private String title;
 
+
+    @Column(name = "launch_date")
     @NotNull
-//    private LocalDate publishDate;
     private LocalDate launchDate;
 
-//    @Column(name = "page_number")
+
     @Column(name = "category")
     @NotNull
     private String category;

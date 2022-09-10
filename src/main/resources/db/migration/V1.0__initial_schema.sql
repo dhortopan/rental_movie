@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS Movies(
                                      id bigint  PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
                                      director varchar(50),
     title varchar(100),
-    launchDate date,
+    launch_date date,
     category varchar(100),
     borrowed boolean,
     rental_id bigint

@@ -25,20 +25,20 @@ public class RentalController {
         this.rentalService = rentalService;
     }
 
-    @GetMapping
-    @PreAuthorize("isAuthenticated")
+    @GetMapping("/return/all")
+//    @PreAuthorize("isAuthenticated")
     public List<RentalDTO> findAll() {
         return rentalService.findAll();
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("isAuthenticated")
+//    @PreAuthorize("isAuthenticated")
     public RentalDTO rentMovie(@PathVariable("id") Movie movie) {
         return rentalService.create(movie);
     }
 
     @GetMapping("/return/{id}")
-    @PreAuthorize("isAuthenticated")
+//    @PreAuthorize("isAuthenticated")
     public RentalDTO returnMovie(@PathVariable("id") Rental rental) {
         return rentalService.returnMovie(rental);
     }

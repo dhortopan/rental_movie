@@ -1,20 +1,17 @@
 package application.rental_movie.entities_models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.security.core.userdetails.User;
-
+import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "rents")
+@Table(name = "rental")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Getter
+@Setter
 
     public class Rental {
         @Id
@@ -35,8 +32,7 @@ import java.time.LocalDate;
 
         @ManyToOne
         @JoinColumn(name = "user_id", nullable = false)
-//        private User user;
-        private UserRole user;
+        private User user;
 
         @ManyToOne
         @JoinColumn(name = "movie_id", nullable = false)

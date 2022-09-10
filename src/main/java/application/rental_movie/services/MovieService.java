@@ -17,6 +17,9 @@ public interface MovieService {
 
     boolean deleteById(Long id);
 
+//    void deleteById(Long id);
+
+
     // UPDATE method
     MovieDTO update(MovieDTO movie);
 }

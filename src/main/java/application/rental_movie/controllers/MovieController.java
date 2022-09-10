@@ -4,6 +4,7 @@ import application.rental_movie.dto.MovieDTO;
 import application.rental_movie.services.MovieService;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/movie")
-//@JsonIgnoreProperties({"hibernateEagerInitializer", "handler"})
+
 public class MovieController {
     private final MovieService movieService;
 
@@ -42,7 +43,7 @@ public class MovieController {
      * @param movieDTO movie that has to be created
      * @return created movie
      */
-    @PostMapping
+    @PostMapping("/create")
 //    @Secured("ROLE_ADMIN")
     public MovieDTO create(@Valid @RequestBody MovieDTO movieDTO) {
         return movieService.create(movieDTO);
@@ -56,9 +57,12 @@ public class MovieController {
      */
     @DeleteMapping("/{id}")
 //    @Secured("ROLE_ADMIN")
-    public boolean deleteById(@PathVariable Long id) {
-        return movieService.deleteById(id);
-    }
+    public boolean deleteById(@PathVariable ("id") Long id) {
+        return movieService.deleteById(id);}
+
+//    public void deleteById(Long id) {
+//         movieService.deleteById(id);}
+
 
     /**
      * Deletes movie by given object

@@ -19,13 +19,13 @@ public class UserController {
     }
 
     @GetMapping
-    @Secured("ROLE_ADMIN")
+//    @Secured("ROLE_ADMIN")
     public List<UserDTO> findAll() {
         return userService.findAll();
     }
 
     @PostMapping
-    @PreAuthorize("isAnonymous()")
+//    @PreAuthorize("isAnonymous()")
     public UserDTO create(@Valid @RequestBody UserDTO userDTO) {
         return userService.create(userDTO);
     }

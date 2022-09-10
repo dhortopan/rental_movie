@@ -1,8 +1,8 @@
 insert into user_roles(userType)
-values("Admin"), ("User");
+values("ROLE_ADMIN"), ("ROLE_USER");
 
 
-insert into movies(director, title, launchDate, category,borrowed,rental_id)
+insert into movies(director, title, launch_date, category,borrowed,rental_id)
 values('Adam Miller','Butterfly','2021-06-28','Thriller',1,1),
       ('Adam Miller','My friend','2019-03-01','Romance',FALSE,1);
 
