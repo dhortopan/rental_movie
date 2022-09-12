@@ -1,56 +1,56 @@
 package application.rental_movie.controllers;
 
-import application.rental_movie.dto.UserDTO;
+import application.rental_movie.dto.UserDTORequest;
+import application.rental_movie.dto.UserDTOResponse;
 import application.rental_movie.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
+import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@RestController
+@RequestMapping("/api/user")
+@RequiredArgsConstructor
+@Validated
 public class UserController {
     private final UserService userService;
 
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+//    @Autowired
+//    public UserController(UserService userService) {
+//        this.userService = userService;
+//    }
 
-    @GetMapping
-//    @Secured("ROLE_ADMIN")
-    public List<UserDTO> findAll() {
+    @GetMapping("/all")
+    public List<UserDTOResponse> findAll() {
         return userService.findAll();
     }
 
-    @PostMapping
-//    @PreAuthorize("isAnonymous()")
-    public UserDTO create(@Valid @RequestBody UserDTO userDTO) {
-        return userService.create(userDTO);
+    @GetMapping({"/{id}"})
+    public UserDTOResponse findById(@PathVariable Integer id) {
+        return userService.findById(id);
     }
 
-    @DeleteMapping
-    @Secured("ROLE_ADMIN")
-    public boolean delete(@RequestBody UserDTO userDTO) {
-        return userService.delete(userDTO);
+    @GetMapping("/name")
+    public List<UserDTOResponse> findByName(@RequestParam(name = "name") String name) {
+        return userService.findByName(name);
     }
+
+    @PostMapping
+    public UserDTOResponse create(@Valid @RequestBody UserDTORequest userDTORequest) {
+        return userService.save(userDTORequest);
+    }
+
+    @PutMapping("{id}")
+    public UserDTOResponse update(@PathVariable(value = "id") Integer id, @RequestBody UserDTORequest userDTORequest) {
+        return userService.update(id, userDTORequest);
+    }
+
 
     @DeleteMapping("/{id}")
-    @Secured("ROLE_ADMIN")
-    public boolean deleteByID(@PathVariable("id") Long id) {
-        return userService.deleteById(id);
+    public void deleteByID(@PathVariable("id") Integer id) {
+        userService.delete(id);
     }
 
-    @GetMapping("/admin")
-    @PreAuthorize("isAuthenticated()")
-    public Boolean hasAdminRole() {
-        return userService.hasAdminRole();
-    }
-
-    @RequestMapping("/login")
-    @PreAuthorize("isAnonymous()")
-    public boolean login(@Valid @RequestBody UserDTO userDTO) {
-        return userService.isLoginCorrect(userDTO.getUsername(), userDTO.getPassword());
-    }
 }

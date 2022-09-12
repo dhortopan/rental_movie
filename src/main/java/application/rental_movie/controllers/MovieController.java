@@ -1,11 +1,10 @@
 package application.rental_movie.controllers;
 
-import application.rental_movie.dto.MovieDTO;
+import application.rental_movie.dto.MovieDTORequest;
+import application.rental_movie.dto.MovieDTOResponse;
 import application.rental_movie.services.MovieService;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
+import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,18 +12,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/movie")
+@RequiredArgsConstructor
+@Validated
 
 public class MovieController {
     private final MovieService movieService;
 
-//    @Autowired
 //    public MovieController(MovieService movieService) {
 //        this.movieService = movieService;
 //    }
-
-    public MovieController(MovieService movieService) {
-        this.movieService = movieService;
-    }
 
     /**
      * Finds all movies mapped to DTO.
@@ -32,9 +28,29 @@ public class MovieController {
      * @return list of all movies
      */
     @GetMapping("all")
-//    @Secured({"ROLE_ADMIN", "ROLE_USER"})
-    public List<MovieDTO> findAll() {
+
+    public List<MovieDTOResponse> findAll() {
         return movieService.findAll();
+    }
+
+    /**
+     * Finds movie by id mapped to DTO.
+     *
+     * @return  movie by id
+     */
+    @GetMapping("{id}")
+    public MovieDTOResponse findById(@PathVariable Integer id) {
+        return movieService.findById(id);
+    }
+
+    /**
+     * Finds movies mapped to DTO by name.
+     *
+     * @return list of movies by name
+     */
+    @GetMapping("name")
+    public List<MovieDTOResponse> findByName(@RequestParam String name) {
+        return movieService.findByName(name);
     }
 
     /**
@@ -43,10 +59,22 @@ public class MovieController {
      * @param movieDTO movie that has to be created
      * @return created movie
      */
-    @PostMapping("/create")
-//    @Secured("ROLE_ADMIN")
-    public MovieDTO create(@Valid @RequestBody MovieDTO movieDTO) {
-        return movieService.create(movieDTO);
+    @PostMapping()
+
+    public MovieDTOResponse create(@Valid @RequestBody MovieDTORequest movieDTO) {
+        return movieService.save(movieDTO);
+    }
+
+    /**
+     * Allows to update new movie
+     *
+     * @param movieDTORequest movie that has to be updated
+     * @return updated movie
+     */
+
+    @PutMapping("{id}")
+    public MovieDTOResponse update(@PathVariable("id") Integer id, @RequestBody MovieDTORequest movieDTORequest) {
+        return movieService.update(id, movieDTORequest);
     }
 
     /**
@@ -55,24 +83,9 @@ public class MovieController {
      * @param id movie's id that has to be deleted
      * @return true is movie has been removed, otherwise false
      */
-    @DeleteMapping("/{id}")
-//    @Secured("ROLE_ADMIN")
-    public boolean deleteById(@PathVariable ("id") Long id) {
-        return movieService.deleteById(id);}
+    @DeleteMapping("{id}")
 
-//    public void deleteById(Long id) {
-//         movieService.deleteById(id);}
+    public void delete(@PathVariable("id") Integer id) {
+        movieService.delete(id);}
 
-
-    /**
-     * Deletes movie by given object
-     *
-     * @param movie
-     * @return
-     */
-    @DeleteMapping
-//    @Secured("ROLE_ADMIN")
-    public boolean delete(@RequestBody MovieDTO movie) {
-        return movieService.delete(movie);
-    }
 }

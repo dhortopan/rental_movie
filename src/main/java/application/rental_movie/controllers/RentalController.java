@@ -1,46 +1,56 @@
 package application.rental_movie.controllers;
 
-import application.rental_movie.dto.RentalDTO;
-import application.rental_movie.entities_models.Movie;
-import application.rental_movie.entities_models.Rental;
+import application.rental_movie.dto.RentalDTORequest;
+import application.rental_movie.dto.RentalDTOResponse;
 import application.rental_movie.services.RentalService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/rent")
-@CrossOrigin
+@RequestMapping("/api/rentals")
+@RequiredArgsConstructor
+@Validated
 public class RentalController {
 
     private final RentalService rentalService;
 
-//    @Autowired
 //    public RentalController(RentalService rentalService) {
 //        this.rentalService = rentalService;
 //    }
 
-    public RentalController(RentalService rentalService) {
-        this.rentalService = rentalService;
-    }
-
-    @GetMapping("/return/all")
-//    @PreAuthorize("isAuthenticated")
-    public List<RentalDTO> findAll() {
+    @GetMapping("/all")
+    public List<RentalDTOResponse> findAll() {
         return rentalService.findAll();
     }
 
-    @GetMapping("/{id}")
-//    @PreAuthorize("isAuthenticated")
-    public RentalDTO rentMovie(@PathVariable("id") Movie movie) {
-        return rentalService.create(movie);
+    @GetMapping("/returnDate")
+    public List<RentalDTOResponse> findRentalByReturnDate(@RequestParam(name="returnDate") Date date) {
+        return rentalService.findByReturnDate(date);
     }
 
-    @GetMapping("/return/{id}")
-//    @PreAuthorize("isAuthenticated")
-    public RentalDTO returnMovie(@PathVariable("id") Rental rental) {
-        return rentalService.returnMovie(rental);
+    @GetMapping("/rentalDate")
+    public List<RentalDTOResponse> findRentalByRentalDate(@RequestParam(name = "rentalDate") Date date) {
+        return rentalService.findByRentalDate(date);
     }
 
+    @PostMapping
+    public RentalDTOResponse save(@RequestBody RentalDTORequest rentalDTORequest) {
+        return rentalService.save(rentalDTORequest);
+    }
+
+
+    @PutMapping("{id}")
+    public RentalDTOResponse update(@PathVariable("id") Integer id, @RequestBody RentalDTORequest rentalDTORequest) {
+        return rentalService.update(id, rentalDTORequest);
+    }
+
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable("id") Integer id) {
+        rentalService.delete(id);
+    }
 }
