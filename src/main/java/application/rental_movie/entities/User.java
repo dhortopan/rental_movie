@@ -1,14 +1,16 @@
 package application.rental_movie.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -52,9 +54,6 @@ public class User  {
 
 
     @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
-//    @JoinColumn(name = "rental_id", nullable = false)
-//    @JsonIgnore
-//    @ToString.Exclude
     private List<Rental> rentals;
 
 

@@ -1,18 +1,20 @@
 package application.rental_movie.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Setter
-@Getter
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

@@ -14,5 +14,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     @Override
     Optional<Employee> findById(Integer integer);
 
-
+    // pt security
+    Employee findByEmail(String email);
 }

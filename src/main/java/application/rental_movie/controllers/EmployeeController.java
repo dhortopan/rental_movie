@@ -5,6 +5,7 @@ import application.rental_movie.dto.EmployeeDTOResponse;
 import application.rental_movie.services.EmployeeService;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +34,7 @@ public class EmployeeController {
     public EmployeeDTOResponse save(@Parameter(description = "Documented Model used as input for POST")
                                @Valid @RequestBody EmployeeDTORequest employeeDTORequest) {
         return employeeService.save(employeeDTORequest); }
+
 
     @PutMapping("{id}")
     public EmployeeDTOResponse update(@PathVariable("id") Integer id, @RequestBody EmployeeDTORequest employeeDTORequest)

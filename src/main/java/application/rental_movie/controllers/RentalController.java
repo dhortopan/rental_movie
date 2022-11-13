@@ -4,6 +4,7 @@ import application.rental_movie.dto.RentalDTORequest;
 import application.rental_movie.dto.RentalDTOResponse;
 import application.rental_movie.services.RentalService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,11 +19,8 @@ public class RentalController {
 
     private final RentalService rentalService;
 
-//    public RentalController(RentalService rentalService) {
-//        this.rentalService = rentalService;
-//    }
-
     @GetMapping("/all")
+//    @PreAuthorize("isAuthenticated")
     public List<RentalDTOResponse> findAll() {
         return rentalService.findAll();
     }
